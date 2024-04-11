@@ -47,3 +47,8 @@ p{
 #infocontainer{
   background-color: #fcb827;
 }
+
+#page2{
+  
+  block-size: fit-content;
+}
