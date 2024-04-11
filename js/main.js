@@ -4,7 +4,7 @@ import axios from 'axios'
 
 // create function for getting the api and spitting out in console
 // Function to handle the click event and toggle page visibility
-// main.js
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const page1 = document.getElementById('page1');
@@ -21,8 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listener for button click
   button.addEventListener('click', togglePages);
 });
-
-
+const zipinput = document.getElementById('zipcode')
+const submitbtn = document.getElementById('submitbtn')
+// zipinput.addEventListener('change', onChange)
+submitbtn.addEventListener('click', (() => getLocation(zipinput.value)))
 
 let condition = '';
 let temperatureInKelvin = '';
@@ -30,24 +32,27 @@ let temperatureInFahrenheit = '';
 let temperatureInCelsius = '';
 let city = '';
 
-function getLocation() {
-  axios.get('http://api.openweathermap.org/geo/1.0/zip?zip=40515,US&appid=5e0a68ade53e10124835e4bf1d41ca81')
+function getLocation(formzip) {
+  axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${formzip},US&appid=5e0a68ade53e10124835e4bf1d41ca81`)
     .then(response => {
-      console.log('data', response.data)
+      console.log('location data', response.data)
       city = response.data.name;
       document.getElementById("city").textContent = city;
+      getWeather(response.data.lat, response.data.lon)
+      
     })
     .catch(error => {
       console.log('error', error)
+
     })
 }
 
-getLocation()
-
-function getWeather() {
-  axios.get('https://api.openweathermap.org/data/2.5/weather?lat=37.9651&lon=-84.4708&appid=5e0a68ade53e10124835e4bf1d41ca81')
+// getLocation()
+let icons = '';
+function getWeather(latitude, longitude) {
+  axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=5e0a68ade53e10124835e4bf1d41ca81`)
     .then(response1 => {
-      console.log('data', response1.data)
+      console.log('weather data', response1.data)
       temperatureInKelvin = response1.data.main.temp;
       condition = response1.data.weather[0].description;
       console.log({ condition })
@@ -58,10 +63,19 @@ function getWeather() {
       document.getElementById("F").textContent = temperatureInFahrenheit.toFixed(2)
       document.getElementById("C").textContent = temperatureInCelsius.toFixed(2)
       document.getElementById("conditions").textContent = condition;
+      icons = response1.data.weather[0].icon
+      conIcon()
     })
     .catch(error => {
       console.log('error', error)
     })
 }
 
-getWeather()
+function conIcon(){
+  document.getElementById('image').setAttribute("src",`https://openweathermap.org/img/wn/${icons}@2x.png`);
+}
+
+// getWeather()
+
+
+
