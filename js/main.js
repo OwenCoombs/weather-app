@@ -37,7 +37,7 @@ let temperatureInCelsius = '';
 let city = '';
 
 function getLocation(formzip) {
-  axios.get(`http://api.openweathermap.org/geo/1.0/zip?zip=${formzip},US&appid=5e0a68ade53e10124835e4bf1d41ca81`)
+  axios.get(`https://api.openweathermap.org/geo/1.0/zip?zip=${formzip},US&appid=5e0a68ade53e10124835e4bf1d41ca81`)
     .then(response => {
       console.log('location data', response.data)
       city = response.data.name;
