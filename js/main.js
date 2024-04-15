@@ -24,7 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
 const zipinput = document.getElementById('zipcode')
 const submitbtn = document.getElementById('submitbtn')
 // zipinput.addEventListener('change', onChange)
-submitbtn.addEventListener('click', (() => getLocation(zipinput.value)))
+submitbtn.addEventListener('click', (() => getLocation(zipinput.value))) 
+// This event listener is attached to the "submitbtn" element and listens for a click event. 
+// When the button is clicked, it triggers the "getLocation"
+// function with the value entered in the "zipinput" field.
+
 
 let condition = '';
 let temperatureInKelvin = '';
